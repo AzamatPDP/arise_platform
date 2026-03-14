@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-center mb-4">Mavjud test yo'nalishlari</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="list-group shadow-sm">
+            {% for cat in categories %}
+                <a href="{% url 'take_test' cat.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
+                    <span class="fw-bold">{{ cat.name }}</span>
+                    <span class="badge bg-primary rounded-pill">Testga kirish →</span>
+                </a>
+            {% empty %}
+                <p class="text-center text-muted">Hozircha testlar qo'shilmagan.</p>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">Bosh sahifaga qaytish</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

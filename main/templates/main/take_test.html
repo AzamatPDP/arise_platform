@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .test-card {
+        border-radius: 20px;
+        overflow: hidden;
+    }
+    .question-box {
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        border-radius: 15px;
+    }
+    .question-box:hover {
+        background-color: #fdfdfd;
+        transform: scale(1.01);
+    }
+    .option-item {
+        cursor: pointer;
+        transition: 0.2s;
+        border: 2px solid #eee !important;
+    }
+    .option-item:hover {
+        border-color: #00a8a8 !important;
+        background-color: #e6f7f7;
+    }
+    /* Radio tugma tanlanganda stilni o'zgartirish */
+    .form-check-input:checked + .form-check-label {
+        font-weight: bold;
+        color: #00a8a8;
+    }
+    @media (max-width: 768px) {
+        .display-6 { font-size: 1.5rem; }
+        .card-body { padding: 1rem !important; }
+    }
+</style>
+
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+
+            <div class="d-flex align-items-center mb-4 mt-3">
+                <a href="{% url 'category_list' %}" class="btn btn-outline-secondary rounded-circle me-3 shadow-sm">
+                    <i class="bi bi-arrow-left"></i> ←
+                </a>
+                <h2 class="fw-bold mb-0" style="color: #00a8a8;">{{ category.name }}</h2>
+            </div>
+
+            <div class="card test-card shadow-sm border-0 p-3 p-md-4">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-4 p-4 bg-light rounded-3 border-start border-5" style="border-color: #00a8a8 !important;">
+                        <label class="form-label fw-bold fs-5">To'liq ismingizni kiriting:</label>
+                        <input type="text" name="full_name" class="form-control form-control-lg shadow-sm border-0" placeholder="Ism va familiyangizni yozing..." required>
+                        <small class="text-muted mt-2 d-block">* Natijangiz ushbu ism bilan bazaga saqlanadi.</small>
+                    </div>
+
+                    <hr class="my-5 opacity-10">
+
+                    {% for q in questions %}
+                    <div class="mb-5 question-box p-3 p-md-4 border">
+                        <p class="fw-bold fs-5 mb-4 text-dark">
+                            <span class="badge rounded-pill me-2" style="background-color: #00a8a8;">{{ forloop.counter }}</span>
+                            {{ q.text }}
+                        </p>
+
+                        <div class="d-flex flex-column gap-3">
+                            <div class="form-check option-item p-3 rounded shadow-sm">
+                                <input class="form-check-input ms-0 me-2" type="radio" name="question_{{ q.id }}" value="1" required id="q{{ q.id }}_1">
+                                <label class="form-check-label d-block w-100 cursor-pointer" for="q{{ q.id }}_1">
+                                    {{ q.option_1 }}
+                                </label>
+                            </div>
+
+                            <div class="form-check option-item p-3 rounded shadow-sm">
+                                <input class="form-check-input ms-0 me-2" type="radio" name="question_{{ q.id }}" value="2" id="q{{ q.id }}_2">
+                                <label class="form-check-label d-block w-100 cursor-pointer" for="q{{ q.id }}_2">
+                                    {{ q.option_2 }}
+                                </label>
+                            </div>
+
+                            <div class="form-check option-item p-3 rounded shadow-sm">
+                                <input class="form-check-input ms-0 me-2" type="radio" name="question_{{ q.id }}" value="3" id="q{{ q.id }}_3">
+                                <label class="form-check-label d-block w-100 cursor-pointer" for="q{{ q.id }}_3">
+                                    {{ q.option_3 }}
+                                </label>
+                            </div>
+
+                            <div class="form-check option-item p-3 rounded shadow-sm">
+                                <input class="form-check-input ms-0 me-2" type="radio" name="question_{{ q.id }}" value="4" id="q{{ q.id }}_4">
+                                <label class="form-check-label d-block w-100 cursor-pointer" for="q{{ q.id }}_4">
+                                    {{ q.option_4 }}
+                                </label>
+                            </div>
+
+                            <div class="form-check option-item p-3 rounded shadow-sm">
+                                <input class="form-check-input ms-0 me-2" type="radio" name="question_{{ q.id }}" value="5" id="q{{ q.id }}_5">
+                                <label class="form-check-label d-block w-100 cursor-pointer" for="q{{ q.id }}_5">
+                                    {{ q.option_5 }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center py-5">
+                        <i class="bi bi-exclamation-triangle display-1 text-warning"></i>
+                        <p class="text-secondary fs-5 mt-3">Bu bo'limda hozircha savollar mavjud emas.</p>
+                    </div>
+                    {% endfor %}
+
+                    {% if questions %}
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-lg px-5 py-3 rounded-pill text-white shadow-lg fw-bold"
+                                style="background-color: #00a8a8; border: none; transition: 0.3s;">
+                            <i class="bi bi-check2-circle"></i> Testni yakunlash va ballni hisoblash
+                        </button>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

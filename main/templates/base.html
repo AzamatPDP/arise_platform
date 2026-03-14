@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARISE - Platforma</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --main-color: #00a8a8;
+            --main-hover: #008a8a;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar dizayni */
+        .navbar {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: var(--main-color) !important;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #555 !important;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--main-color) !important;
+        }
+
+        /* Asosiy konteyner */
+        .main-content {
+            flex: 1;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Maxsus tugma */
+        .btn-custom {
+            background-color: var(--main-color);
+            color: white;
+            border-radius: 50px;
+            padding: 8px 25px;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: var(--main-hover);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 168, 168, 0.2);
+        }
+
+        /* Logout tugmasi stili */
+        .logout-btn {
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+                <i class="bi bi-mortarboard-fill"></i> ARISE
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{% url 'home' %}"><i class="bi bi-house-door"></i> Bosh sahifa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{% url 'category_list' %}"><i class="bi bi-pencil-square"></i> Testlar</a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle rounded-pill px-4" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle"></i> {{ user.username }}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                                    <li>
+                                        <a class="dropdown-item" href="/admin/">
+                                            <i class="bi bi-speedometer2 me-2"></i> Admin Panel
+                                        </a>
+                                    </li>
+
+                                    {% if user.is_superuser %}
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'test_results_list' %}">
+                                            <i class="bi bi-bar-chart-line me-2"></i> Natijalar
+                                        </a>
+                                    </li>
+                                    {% endif %}
+
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form action="{% url 'admin:logout' %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="dropdown-item text-danger logout-btn">
+                                                <i class="bi bi-box-arrow-right me-2"></i> Chiqish
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                            <a href="/admin/login/" class="btn btn-custom shadow-sm">
+                                <i class="bi bi-box-arrow-in-right"></i> Kirish
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container main-content py-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

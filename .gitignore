@@ -1,0 +1,19 @@
+# Python kesh fayllari
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual muhit
+venv/
+env/
+.env
+
+# Django maxfiy fayllari
+db.sqlite3
+media/
+static/
+
+# IDE sozlamalari (PyCharm, VS Code)
+.idea/
+.vscode/
+*.swp

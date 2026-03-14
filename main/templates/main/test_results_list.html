@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold m-0" style="color: #00a8a8;">Barcha Natijalar (Admin)</h2>
+            <p class="text-muted m-0">Jami topshirilgan testlar soni: {{ results.count }} ta</p>
+        </div>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm rounded-pill">
+            </i> Bosh sahifa
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">F.I.SH</th>
+                        <th>Kategoriya</th>
+                        <th class="text-center">Ball</th>
+                        <th>Sana</th>
+                        <th class="text-end pe-4">Amallar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td class="ps-4 fw-semibold">{{ result.full_name }}</td>
+                        <td><span class="badge bg-light text-dark border">{{ result.category.name }}</span></td>
+                        <td class="text-center fw-bold text-primary">{{ result.score }}</td>
+                        <td class="text-muted small">{{ result.date|date:"d.m.Y, H:i" }}</td>
+                        <td class="text-end pe-4">
+                            <a href="/admin/main/testresult/{{ result.id }}/change/" class="btn btn-sm btn-light border">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5">Natijalar hali yo'q.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

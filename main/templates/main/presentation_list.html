@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .pres-card {
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        border-radius: 15px;
+        background: #fff;
+    }
+    .pres-card:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    .pres-icon-box {
+        width: 60px;
+        height: 60px;
+        background-color: #f0f9f0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #56ab2f;
+        font-size: 1.8rem;
+        margin: 0 auto 15px;
+    }
+</style>
+
+<div class="container pb-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <div>
+            <h2 class="fw-bold mb-1" style="color: #56ab2f;">Taqdimotlar</h2>
+            <p class="text-muted mb-0">Tadqiqot natijalari va ilmiy taqdimotlar (PPTX, PDF)</p>
+        </div>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-house me-1">></i> ← Bosh sahifaga
+        </a>
+    </div>
+
+    <hr class="mb-5 opacity-10">
+
+    <div class="row g-4">
+        {% for pres in presentations %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card pres-card h-100 shadow-sm border-0 p-3">
+                <div class="card-body text-center d-flex flex-column">
+                    <div class="pres-icon-box">
+                        <i class="bi bi-file-earmark-ppt">📊</i>
+                    </div>
+                    <h5 class="card-title fw-bold mb-3">{{ pres.title }}</h5>
+
+                    <p class="card-text text-muted small mb-4">
+                        Tadqiqotning vizual ko'rinishi va asosiy natijalari jamlangan taqdimot fayli.
+                    </p>
+
+                    <div class="mt-auto d-grid gap-2">
+                        <a href="{{ pres.file.url }}" class="btn btn-success rounded-pill shadow-sm py-2" style="background-color: #56ab2f; border: none;" target="_blank">
+                            Ko'rish va yuklash
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="display-1 text-muted opacity-25 mb-3">📉</div>
+            <h4 class="text-muted">Hozircha taqdimotlar yuklanmagan.</h4>
+            <p class="text-muted small">Yaqin orada yangi taqdimotlar qo'shiladi.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
