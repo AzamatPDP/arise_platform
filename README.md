@@ -24,23 +24,6 @@ Administratorlar uchun yaratilgan maxsus interfeys orqali test natijalarini kuza
 ### 📂 Ierarxik Ma'lumotlar Tuzilmasi
 Ilmiy kontent **Modul ➡️ Mavzu ➡️ Blok** ierarxiyasi asosida tashkil etilgan bo'lib, bu ma'lumotlarni oson o'zlashtirishga xizmat qiladi.
 
----
-
-## 📸 Platformadan Lavhalar
-
-### 🏠 Asosiy Dashboard
-Platformaning kirish qismi minimalist va tushunarli dizaynda ishlab chiqilgan.
-<p align="center">
-  <img src="screenshots/home_page.png" width="900" alt="Home Dashboard" style="border-radius: 10px; border: 1px solid #ddd;">
-</p>
-
-### ⚙️ Admin Boshqaruv Markazi
-Test natijalari va foydalanuvchilar bazasini boshqarish uchun qulay va filtrlarga boy interfeys.
-<p align="center">
-  <img src="screenshots/admin_panel.png" width="900" alt="Admin Panel" style="border-radius: 10px; border: 1px solid #ddd;">
-</p>
-
----
 
 ## 🛠 Texnologik Stek
 
